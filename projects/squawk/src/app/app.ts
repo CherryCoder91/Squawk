@@ -4,13 +4,8 @@ import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'cherrycoder91-root',
   imports: [RouterOutlet],
-  template: `
-    <h1>Welcome to {{ title() }}!</h1>
-
-    <router-outlet />
-  `,
+  templateUrl: './app.html',
   styles: [],
 })
 export class App {
-  protected readonly title = signal('squawk');
 }

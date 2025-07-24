@@ -1,1 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@import "primeicons/primeicons.css";
+
+
+@font-face {
+    font-family: 'Inter';
+    src: url('../public/fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+    font-style: normal;
+}
+
+@theme {
+    --font-sans: "Inter", "sans-serif";
+    --text-base: 14px;
+    --spacing: 0.25rem;
+}
+
+html {
+    font-size: var(--text-base);
+    line-height: normal;
+    font-weight: var(--font-weight);
+    font-variation-settings: normal;
+    background-color: var(--p-surface-200);
+}
+
+html.my-app-dark {
+    /* --p-content-background: var(--p-surface-600); */
+    background-color: var(--p-surface-950);
+}
