@@ -17,10 +17,10 @@ import { TextareaModule } from 'primeng/textarea';
   styleUrl: './development-page.css'
 })
 export class DevelopmentPage implements OnInit {
-
+public  configuration = {'iceServers': [{'urls': 'stun:stun.l.google.com:19302'}]}
   public localStream: any = null;
   public remoteStream: any = null;
-  public peerConnection: any = new RTCPeerConnection();
+  public peerConnection: any = new RTCPeerConnection(this.configuration);
   public offerObjectString: any = signal(null);
   public answerObjectString: any = signal(null);
 
@@ -63,7 +63,6 @@ export class DevelopmentPage implements OnInit {
 
     this.peerConnection.onicecandidate = async (event:any) => {
         if(event.candidate){
-            console.log('Adding answer candidate...:', event.candidate);
             this.answerObjectString.set(JSON.stringify(this.peerConnection.localDescription));
             navigator.clipboard.writeText(this.answerObjectString());
         }
