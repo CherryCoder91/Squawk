@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist\\squawk\\browser",
+    "public": "dist/squawk/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
