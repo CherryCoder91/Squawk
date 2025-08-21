@@ -6,7 +6,11 @@ export const routes: Routes = [
         loadComponent: () => import('../components/pages/development-page/development-page').then(m => m.DevelopmentPage)
     },
     {
+        path: 'development-2',
+        loadComponent: () => import('../components/pages/development-page-2/development-page-2').then(m => m.DevelopmentPage2)
+    },
+    {
         path: '**',
-        redirectTo: 'development'
+        redirectTo: 'development-2'
     }
 ];
