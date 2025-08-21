@@ -19,6 +19,6 @@ export const routes: Routes = [
     },
     {
         path: '**',
-        redirectTo: 'development-2'
+        redirectTo: 'register'
     }
 ];

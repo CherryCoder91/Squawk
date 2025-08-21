@@ -1,11 +1,22 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getAuth, provideAuth } from '@angular/fire/auth';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideRouter } from '@angular/router';
 import { definePreset } from '@primeuix/themes';
-import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
+import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
 
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBR89w0VDnxvKC8GY5fScBbdFmXUkawxgY",
+  authDomain: "squawk-865e9.firebaseapp.com",
+  projectId: "squawk-865e9",
+  storageBucket: "squawk-865e9.firebasestorage.app",
+  messagingSenderId: "481750523528",
+  appId: "1:481750523528:web:256099c828b04828c9c93d"
+};
 
 const customPresets = {
   semantic: {
@@ -79,6 +90,8 @@ export const appConfig: ApplicationConfig = {
           darkModeSelector: '.my-app-dark'
         }
       }
-    })
+    }),
+    provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    provideAuth(() => getAuth())
   ]
 };

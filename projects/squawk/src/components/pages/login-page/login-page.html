@@ -5,4 +5,14 @@
         <h1 class="text-6xl">Login to Squawk!</h1>
     </div>
 
+    @if(!authService.currentUserSignal()) {
+        <p-button label="Login" (click)="loginUser()" />
+
+        @if (errorCode) {
+            <p class="text-red-500">{{ errorCode }}</p>
+        }
+    } @else {
+        <p-button label="Logout" (click)="logout()" />
+    }
+
 </div>
