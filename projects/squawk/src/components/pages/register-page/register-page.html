@@ -5,10 +5,16 @@
         <h1 class="text-6xl">Register to Squawk!</h1>
     </div>
 
+    <div class="flex flex-row">
+        <input type="text" pInputText [(ngModel)]="email" placeholder="Email" />
+        <input type="password" pInputText [(ngModel)]="password" placeholder="Password" />
+        <input type="text" pInputText [(ngModel)]="username" placeholder="Username" />
+    </div>
+
     <p-button label="Register" (click)="registerUser()" />
 
     @if (errorCode) {
-      <p class="text-red-500">{{ errorCode }}</p>
+        <p class="text-red-500">{{ errorCode }}</p>
     }
 
 </div>

@@ -6,6 +6,12 @@
     </div>
 
     @if(!authService.currentUserSignal()) {
+
+        <div class="flex flex-row">
+            <input type="text" pInputText [(ngModel)]="email" placeholder="Email" />
+            <input type="password" pInputText [(ngModel)]="password" placeholder="Password" />
+        </div>
+
         <p-button label="Login" (click)="loginUser()" />
 
         @if (errorCode) {

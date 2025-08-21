@@ -3,6 +3,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
@@ -13,13 +14,16 @@ import { Router } from '@angular/router';
     ButtonModule,
     TextareaModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    InputTextModule
   ],
   templateUrl: './login-page.html',
   styleUrl: './login-page.css'
 })
 export class LoginPage implements OnInit {
 
+  public email: string = '';
+  public password: string = '';
   public errorCode: string | null = null;
 
 
@@ -33,9 +37,7 @@ export class LoginPage implements OnInit {
   }
 
   public loginUser(): void {
-    const email = 'email@example.com';
-    const password = 'password';
-    this.authService.login(email, password).subscribe({
+    this.authService.login(this.email, this.password).subscribe({
       next: (userCredential) => {
         console.log('Login successful:', userCredential);
         this.navigationService.navigate(['/development-2']);
