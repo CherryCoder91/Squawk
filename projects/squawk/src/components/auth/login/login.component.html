@@ -1,0 +1,47 @@
+@if(!authService.currentUserSignal()) {
+    <p-card [style]="{ width: '25rem', overflow: 'hidden' }">
+        <ng-template #header>
+            <img alt="Card" class="w-full" src="/images/squawk-logo.png" />
+        </ng-template>
+
+        <ng-template #title class="text-center w-full"> Sign in </ng-template>
+
+        <div class="flex flex-col gap-4 my-4">
+            <div class="flex flex-col gap-1">
+                <label for="email">Email:</label>
+                <input type="text" pInputText id="email" [(ngModel)]="email" />
+            </div>
+            <div class="flex flex-col gap-1">
+                <label for="password">Password:</label>
+                <input type="password" pInputText id="password" [(ngModel)]="password" />
+            </div>
+
+            @if(errorCode) {
+                <small class="text-red-500">{{ errorCode | authErrorFriendly}}</small>
+            }
+        </div>
+
+        <ng-template #footer>
+            <div class="flex gap-4">
+                <p-button label="Create Account" severity="secondary" class="w-full" [outlined]="true" styleClass="w-full" (onClick)="goToRegisterPage()" />
+                <p-button label="Sign in" class="w-full" styleClass="w-full" (onClick)="loginUser()" />
+            </div>
+        </ng-template>
+    </p-card>
+} @else {
+    <p-card [style]="{ width: '25rem', overflow: 'hidden' }">
+        <ng-template #header>
+            <img alt="Card" class="w-full" src="/images/squawk-logo.png" />
+        </ng-template>
+
+        <div class="text-center w-full text-2xl"> Signed in as {{ authService.currentUserSignal()?.email }}</div>
+
+        <ng-template #footer>
+            <div class="flex gap-4 mt-2">
+                <p-button label="Sign out" severity="secondary" class="w-full" [outlined]="true" styleClass="w-full"
+                    (onClick)="logout()" />
+                <p-button label="Continue" class="w-full" styleClass="w-full" (onClick)="continueAsSignedInUser()" />
+            </div>
+        </ng-template>
+    </p-card>
+}

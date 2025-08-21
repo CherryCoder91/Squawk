@@ -1,33 +1,29 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-
+import { Component, OnInit } from '@angular/core';
+import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
+import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
-import { TextareaModule } from 'primeng/textarea';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
-import { LoginComponent } from '../../auth/login/login.component';
+import { AuthErrorFriendlyPipe } from '../../../pipes/auth-error-friendly.pipe';
 
 @Component({
-  selector: 'cherrycoder91-login-page',
+  selector: 'cherrycoder91-login',
   imports: [
-    ButtonModule,
-    TextareaModule,
     FormsModule,
-    CommonModule,
+    CardModule,
+    ButtonModule,
     InputTextModule,
-    LoginComponent,
+    AuthErrorFriendlyPipe
   ],
-  templateUrl: './login-page.html',
-  styleUrl: './login-page.css'
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.css'
 })
-export class LoginPage implements OnInit {
+export class LoginComponent  implements OnInit {
 
   public email: string = '';
   public password: string = '';
   public errorCode: string | null = null;
-
 
   public constructor(
     public readonly authService: AuthService,
@@ -62,5 +58,12 @@ export class LoginPage implements OnInit {
     });
   }
 
-}
+  public continueAsSignedInUser(): void {
+    this.navigationService.navigate(['/development-2']);
+  }
 
+  public goToRegisterPage(): void {
+    this.navigationService.navigate(['/register']);
+  }
+
+}
