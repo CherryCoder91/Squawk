@@ -1,7 +1,8 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { IUser } from '../models/user.interface';
 import { environment } from '../envronments/environment';
+import { ClientService } from './client.service';
 
 export type User = {
   id: string;
@@ -29,25 +30,18 @@ export type LoginPayload = {
 })
 export class AuthService {
 
-  private readonly supabaseClient: SupabaseClient;
+  private readonly client: SupabaseClient = inject(ClientService).getClient();
   public currentUserSignal = signal<IUser | null | undefined>(undefined);
 
-  constructor() {
-    this.supabaseClient = createClient(
-      environment.supabaseUrl,
-      environment.supabaseKey
-    );
-  }
-
   async signInWithEmail(payload: LoginPayload) {
-    return await this.supabaseClient.auth.signInWithPassword({
+    return await this.client.auth.signInWithPassword({
       email: payload.email,
       password: payload.password,
     });
   }
 
   async signUpWithEmail(payload: SignupPayload) {
-    return await this.supabaseClient.auth.signUp({
+    return await this.client.auth.signUp({
       email: payload.email,
       password: payload.password,
       options: {
@@ -59,7 +53,7 @@ export class AuthService {
   }
 
   async getUser() {
-    const userInfo = await this.supabaseClient.auth.getUser();
+    const userInfo = await this.client.auth.getUser();
 
     if (userInfo.error || !userInfo.data.user) {
       this.currentUserSignal.set(null);
@@ -73,6 +67,6 @@ export class AuthService {
 
   async signOut() {
     this.currentUserSignal.set(null);
-    return await this.supabaseClient.auth.signOut();
+    return await this.client.auth.signOut();
   }
 }

@@ -1,0 +1,14 @@
+<div class="m-4">
+
+    <div class="flex flex-col items-center mb-8 border-8 border-[#000e25] p-4">
+        <img src="/images/squawk-logo.png" alt="Squawk Logo" class="mb-8 w-[150px] h-[150px]">
+        <h1 class="text-6xl">Welcome to Squawk 3!</h1>
+    </div>
+
+    <h2>Message Signal:</h2>
+    <p class="mb-4">{{ message() }}</p>
+
+
+    <input type="text" pInputText [(ngModel)]="messageToSend" class="mb-4" />
+    <p-button label="Send message" (onClick)="sendMessage()" class="mb-8"></p-button>
+</div>
