@@ -22,7 +22,8 @@ export class AuthErrorFriendlyPipe implements PipeTransform {
         return 'Email address is already in use.';
       default:
         console.log('Unknown error code:', value);
-        return 'An unknown error occurred. Please try again later.';
+        // return 'An unknown error occurred. Please try again later.';
+        return value;
     }
   }
 

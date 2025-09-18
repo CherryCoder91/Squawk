@@ -1,32 +1,78 @@
-import { Inject, Injectable, signal } from '@angular/core';
-import { Auth, updateProfile, createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential, user} from '@angular/fire/auth';
-import { from, Observable } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { IUser } from '../models/user.interface';
+import { environment } from '../envronments/environment';
+
+export type User = {
+  id: string;
+  email?: string;
+  phone?: string;
+  user_metadata: {
+    displayName?: string;
+  };
+};
+
+export type SignupPayload = {
+  name: string;
+  email: string;
+  password: string;
+};
+
+export type LoginPayload = {
+  email: string;
+  password: string;
+};
+
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
 
-  public readonly user$;
+  private readonly supabaseClient: SupabaseClient;
   public currentUserSignal = signal<IUser | null | undefined>(undefined);
 
-  public constructor(private readonly firebaseAuth: Auth) {
-    this.user$ = user(this.firebaseAuth);
+  constructor() {
+    this.supabaseClient = createClient(
+      environment.supabaseUrl,
+      environment.supabaseKey
+    );
   }
 
-  public register(email: string, username: string, password: string): Observable<void> {
-    const promise = createUserWithEmailAndPassword(this.firebaseAuth, email, password).then((response: any) => updateProfile(response.user, { displayName: email }));
-    return from(promise) as Observable<void>;
+  async signInWithEmail(payload: LoginPayload) {
+    return await this.supabaseClient.auth.signInWithPassword({
+      email: payload.email,
+      password: payload.password,
+    });
   }
 
-  public login(email: string, password: string): Observable<UserCredential> {
-    const promise = signInWithEmailAndPassword(this.firebaseAuth, email, password);
-    return from(promise) as Observable<UserCredential>;
+  async signUpWithEmail(payload: SignupPayload) {
+    return await this.supabaseClient.auth.signUp({
+      email: payload.email,
+      password: payload.password,
+      options: {
+        data: {
+          displayName: payload.name,
+        },
+      },
+    });
   }
 
-  public logout(): Observable<void> {
-    const promise = this.firebaseAuth.signOut();
-    return from(promise) as Observable<void>;
+  async getUser() {
+    const userInfo = await this.supabaseClient.auth.getUser();
+
+    if (userInfo.error || !userInfo.data.user) {
+      this.currentUserSignal.set(null);
+      return userInfo;
+    }
+    const user: IUser = { username: userInfo.data.user?.id as string, email: userInfo.data.user?.email as string };
+    this.currentUserSignal.set(user);
+
+    return userInfo;
+  }
+
+  async signOut() {
+    this.currentUserSignal.set(null);
+    return await this.supabaseClient.auth.signOut();
   }
 }

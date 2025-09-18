@@ -5,7 +5,7 @@
                 <img alt="Card" class="w-full" src="/images/squawk-logo.png" />
             </ng-template>
 
-            <div class="text-center w-full text-2xl"> Signed in as {{ authService.currentUserSignal()?.email }}</div>
+            <div class="text-center w-full text-2xl"> Signed in as {{ supabaseService.currentUserSignal()?.email }}</div>
 
             <ng-template #footer>
                 <div class="flex gap-4 mt-2">

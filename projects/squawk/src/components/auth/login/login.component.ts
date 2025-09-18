@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { CardModule } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { InputTextModule } from 'primeng/inputtext';
-import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
 import { AuthErrorFriendlyPipe } from '../../../pipes/auth-error-friendly.pipe';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'cherrycoder91-login',
@@ -19,41 +19,41 @@ import { AuthErrorFriendlyPipe } from '../../../pipes/auth-error-friendly.pipe';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent  implements OnInit {
+export class LoginComponent implements OnInit {
+
+  public readonly supabaseService = inject(AuthService);
 
   public email: string = '';
   public password: string = '';
   public errorCode: string | null = null;
 
   public constructor(
-    public readonly authService: AuthService,
     private readonly navigationService: Router
   ) { }
 
-
   public ngOnInit(): void {
+    this.supabaseService.getUser().then(() => {});
   }
 
-  public loginUser(): void {
-    this.authService.login(this.email, this.password).subscribe({
-      next: (userCredential) => {
-        console.log('Login successful:', userCredential);
-        this.navigationService.navigate(['/development-2']);
-      },
-      error: (error) => {
-        console.error('Login error:', error);
-        this.errorCode = error.code;
-      }
+  public async loginUser(): Promise<void> {
+    const { error } = await this.supabaseService.signInWithEmail({
+      email: this.email,
+      password: this.password,
     });
+    if (error) {
+      this.errorCode = error.message;
+    } else {
+      console.log('Login successful:', this.email);
+      this.navigationService.navigate(['/development-2']);
+    }
   }
 
   public logout(): void {
-    this.authService.logout().subscribe({
-      next: () => {
-        console.log('Logout successful');
-      },
-      error: (error) => {
-        console.error('Logout error:', error);
+    this.supabaseService.signOut().then(({ error }) => {
+      if (error) {
+        console.error('Error signing out:', error.message)
+      } else {
+        console.log('Sign-out successful');
       }
     });
   }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ButtonModule } from 'primeng/button';
@@ -20,9 +20,4 @@ import { RegisterComponent } from '../../auth/register/register.component';
   templateUrl: './register-page.html',
   styleUrl: './register-page.css'
 })
-export class RegisterPage implements OnInit {
-
-  public ngOnInit(): void {
-  }
-
-}
+export class RegisterPage { }
