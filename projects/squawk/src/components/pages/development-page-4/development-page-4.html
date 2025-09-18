@@ -1,0 +1,77 @@
+<div class="m-4">
+
+    <div class="flex flex-col items-center mb-8 border-8 border-[#000e25] p-4">
+        <img src="/images/squawk-logo.png" alt="Squawk Logo" class="mb-8 w-[150px] h-[150px]">
+        <h1 class="text-6xl">Welcome to Squawk!</h1>
+    </div>
+
+
+    @for (connection of connections.values(); track $index) {
+        <video [srcObject]="connection.remoteStream" autoplay></video>
+    }
+
+    <!-- <div class="grid grid-cols-2 grid-rows-1 gap-4 ">
+        <div class="bg-[#000e25] p-4">
+            @if(localStream) {
+                <video [srcObject]="localStream" autoplay></video>
+            } @else {
+                <div class="text-white">No local stream available.</div>
+            }
+        </div>
+        <div class="bg-[#000e25] p-4">
+            @if(remoteStream) {
+                <video [srcObject]="remoteStream" autoplay></video>
+            } @else {
+                <div class="text-white">No remote stream available.</div>
+            }
+
+        </div>
+
+    </div>
+
+    <hr class="my-4">
+
+    <div class="flex flex-col gap-4">
+        <div>
+           <span class="font-bold">Step 1:</span> Create SDP offer and provide it to user 2 as offer.
+        </div>
+        <div>
+            <p-button label="create offer and copy to clipboard" (click)="createOffer()" />
+        </div>
+        <div>
+            SDP offer:
+        </div>
+        <div>
+            <textarea rows="3" cols="150" pTextarea [(ngModel)]="offerObjectString"></textarea>
+        </div>
+    </div>
+
+    <hr class="my-8">
+
+    <div class="flex flex-col gap-4">
+        <div>
+            <span class="font-bold">Step 2:</span> Create SDP answer based on offer provided by user 1 and provide it to user 1 as answer.
+        </div>
+        <div>
+            <p-button label="create answer and copy to clipboard" (click)="createAnswer()" />
+        </div>
+        <div>
+            SDP answer:
+        </div>
+        <div>
+            <textarea rows="3" cols="150"  pTextarea [(ngModel)]="answerObjectString"></textarea>
+        </div>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="flex flex-col gap-4">
+        <div>
+           <span class="font-bold">Step 3:</span> Go live!
+        </div>
+        <div>
+            <p-button label="Go live!" (click)="addAnswer()" />
+        </div>
+    </div> -->
+
+</div>

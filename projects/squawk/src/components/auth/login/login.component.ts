@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
       this.errorCode = error.message;
     } else {
       console.log('Login successful:', this.email);
-      this.navigationService.navigate(['/development-2']);
+      this.navigationService.navigate(['/development-4']);
     }
   }
 
@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
   }
 
   public continueAsSignedInUser(): void {
-    this.navigationService.navigate(['/development-2']);
+    this.navigationService.navigate(['/development-4']);
   }
 
   public goToRegisterPage(): void {

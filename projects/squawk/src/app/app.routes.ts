@@ -18,6 +18,11 @@ export const routes: Routes = [
         canActivate: [authGuard]
     },
     {
+        path: 'development-4',
+        loadComponent: () => import('../components/pages/development-page-4/development-page-4').then(m => m.DevelopmentPage4),
+        canActivate: [authGuard]
+    },
+    {
         path: 'login',
         loadComponent: () => import('../components/pages/login-page/login-page').then(m => m.LoginPage)
     },
@@ -27,6 +32,6 @@ export const routes: Routes = [
     },
     {
         path: '**',
-        redirectTo: 'login'
+        redirectTo: 'development-4'
     }
 ];
